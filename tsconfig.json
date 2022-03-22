@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+  "target": "es6",                               
+    "module": "commonjs",                           
+    "outDir": "./build",                            
+    "rootDir": "./src",                          
+    "strict": true,                               
+    "noUnusedLocals": true,                   
+    "esModuleInterop": true,                
+    "skipLibCheck": true,     
+    "moduleResolution": "node",                   
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl":"src",     
+  	"paths": {
+      "$routes/*": ["routes/*"],
+			"$controllers/*": ["controllers/*"],
+      "$services/*": ["services/*"],
+      "$validations/*":["validations/*"],
+			"$utils/*": ["utils/*"],
+      "$middlewares/*": ["middlewares/*"]
+		},
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules/*", "build/*","prisma/*"]
+}
