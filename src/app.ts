@@ -11,6 +11,8 @@ const allowedOrigins = [
   "http://localhost:" + String(PORT),
   "http://localhost:3000",
   "http://localhost:3001",
+  "https://namury-rtctest.herokuapp.com/",
+  
 ];
 
 const options: cors.CorsOptions = {

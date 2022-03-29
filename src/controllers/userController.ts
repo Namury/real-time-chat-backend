@@ -10,8 +10,8 @@ import {
 import { Request, Response } from "express";
 
 export async function login(req: Request, res: Response): Promise<Response> {
-  const { email, password, error } = req.body;
-  const { status, userDetails } = await userLoginService(email, password);
+  const { name, error } = req.body;
+  const { status, userDetails } = await userLoginService(name);
   if (status) {
     return response_success(res, userDetails);
   } else {

@@ -1,12 +1,8 @@
 import { prisma } from "$utils/prisma.utils";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 interface RegisterUserObject {
-  userName: string;
-  email: string;
-  name: string;
-  password: string;
+  name:string,
 }
 
 function createToken(user: any) {
@@ -23,23 +19,20 @@ function createToken(user: any) {
 interface UserResponseObject {
   token: string;
   name: string;
-  email: string;
 }
 
 export async function userLoginService(
-  email: string,
-  password: string
+  name: string
 ): Promise<any> {
   try {
     const user = await prisma.user.findUnique({
-      where: { email: email },
+      where: { name: name },
     });
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user) {
       const token = createToken(user);
       const userDetails: UserResponseObject = {
         token: token,
-        name: user.userName,
-        email: user.email,
+        name: user.name
       };
 
       return { status: true, userDetails };
@@ -56,12 +49,9 @@ export async function userRegisterService(
   user: RegisterUserObject
 ): Promise<any> {
   try {
-    user.password = await bcrypt.hash(user.password, 12);
     const createdUser = await prisma.user.create({
       data: {
-        userName: user.userName,
-        email: user.email,
-        password: user.password
+        name: user.name,
       },
     });
     
