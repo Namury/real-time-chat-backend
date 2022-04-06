@@ -31,8 +31,11 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, { 
 	cors: {
-		origin: "https://namury-rtc.herokuapp.com/",
-		methods: ["GET", "POST"]
+		origin: [
+			"https://namury-rtc.herokuapp.com/",
+			"https://namury-rtc.herokuapp.com/room",
+			"https://namury-rtc.herokuapp.com/chat",
+		]
   	} 
 });
 
