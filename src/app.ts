@@ -14,6 +14,7 @@ const allowedOrigins = [
   "http://localhost:3001",
   "https://namury-rtctest.herokuapp.com/",
   "https://namury-rtc.herokuapp.com/",
+  "https://namury-rtc-frontend.herokuapp.com/",
   "https://namury-rtc-backend.herokuapp.com/",
   
 ];
