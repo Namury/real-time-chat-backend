@@ -25,7 +25,12 @@ const options: cors.CorsOptions = {
 
 let http = require("http").Server(app);
 var os = require('os');
-let io = require("socket.io")(http);
+let io = require("socket.io")(http, {
+	cors: {
+		origin: "https://namury-rtc.herokuapp.com/",
+		methods: ["GET", "POST"]
+	  }
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
