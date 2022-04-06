@@ -23,33 +23,47 @@ const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };
 
-import { createServer } from "http";
+// import { createServer } from "http";
 import { Server } from "socket.io";
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(options));
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
-	res.header("Access-Control-Allow-Headers", "Content-Type");
-	res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-	next();
-});
+// app.use(function(req, res, next) {
+// 	res.writeHead(200, {
+// 		"Access-Control-Allow-Origin":"*",
+// 		"Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+// 		"Access-Control-Allow-Headers": "Content-Type",
+// 		"Access-Control-Allow-Credentials": 'true',
+// 	})
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+// 	res.header("Access-Control-Allow-Headers", "Content-Type");
+// 	res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+// 	next();
+// });
 
-const httpServer = createServer(app);
+const server = app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+	routes(app);
+})
 
-const io = new Server(httpServer, { 
+const io = new Server(server, { 
 	cors: {
 		origin: [
 			"https://namury-rtc.herokuapp.com/",
+			"https://namury-rtc.herokuapp.com",
+			"https://namury-rtc.herokuapp.com/room/",
 			"https://namury-rtc.herokuapp.com/room",
+			"https://namury-rtc.herokuapp.com/chat/",
 			"https://namury-rtc.herokuapp.com/chat",
 		],
 		credentials:true,
 		allowedHeaders: ["Access-Control-Allow-Origin"]
+
   	} 
+	
 });
 
 io.on('connection', (socket) => {
@@ -113,7 +127,7 @@ io.on('connection', (socket) => {
 
 
 
-httpServer.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-	routes(app);
-  });
+// httpServer.listen(PORT, () => {
+// 	console.log(`Server is running on port ${PORT}`);
+// 	routes(app);
+//   });
