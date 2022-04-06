@@ -36,7 +36,8 @@ const io = new Server(httpServer, {
 			"https://namury-rtc.herokuapp.com/room",
 			"https://namury-rtc.herokuapp.com/chat",
 		],
-		credentials:true
+		credentials:true,
+		allowedHeaders: ["Access-Control-Allow-Origin"]
   	} 
 });
 
