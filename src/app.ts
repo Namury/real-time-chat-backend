@@ -4,8 +4,11 @@ import "dotenv/config";
 import routes from "./routes";
 import cors from "cors";
 import * as os from "os";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const app = express();
+const httpServer = createServer(app)
 const PORT: number = Number(process.env.PORT) || 3010;
 
 const allowedOrigins = [
@@ -23,8 +26,7 @@ const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };
 
-// import { createServer } from "http";
-import { Server } from "socket.io";
+
 
 
 app.use(express.json());
@@ -44,14 +46,17 @@ app.use(cors(options));
 // 	next();
 // });
 
-const server = app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-	routes(app);
-})
+// const server = app.listen(PORT, () => {
+// 	console.log(`Server is running on port ${PORT}`);
+// 	routes(app);
+// })
 
-const io = new Server(server, { 
+const io = new Server(httpServer, { 
 	cors: {
 		origin: [
+			"http://localhost:" + String(PORT),
+			"http://localhost:3000",
+			"http://localhost:3001",
 			"https://namury-rtc.herokuapp.com/",
 			"https://namury-rtc.herokuapp.com",
 			"https://namury-rtc.herokuapp.com/room/",
@@ -127,7 +132,7 @@ io.on('connection', (socket) => {
 
 
 
-// httpServer.listen(PORT, () => {
-// 	console.log(`Server is running on port ${PORT}`);
-// 	routes(app);
-//   });
+httpServer.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+	routes(app);
+  });
