@@ -19,7 +19,8 @@ const allowedOrigins = [
   "https://namury-rtc.herokuapp.com/",
   "https://namury-rtc-frontend.herokuapp.com/",
   "https://namury-rtc-backend.herokuapp.com/",
-  
+  "https://namury-rtc.vercel.app/",
+  "https://namury-rtc.vercel.app",
 ];
 
 const options: cors.CorsOptions = {
@@ -63,6 +64,8 @@ const io = new Server(httpServer, {
 			"https://namury-rtc.herokuapp.com/room",
 			"https://namury-rtc.herokuapp.com/chat/",
 			"https://namury-rtc.herokuapp.com/chat",
+			"https://namury-rtc.vercel.app/",
+			"https://namury-rtc.vercel.app",
 		],
 		credentials:true,
 		allowedHeaders: ["Access-Control-Allow-Origin"]
