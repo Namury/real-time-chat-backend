@@ -93,10 +93,10 @@ io.on('connection', (socket) => {
 		socket.in(room).emit('message', message, room);
 	  });
 	
-	  socket.on('create or join', function(room:any) {
+	  socket.on('create or join', async function(room:any) {
 		log('Received request to create or join room ' + room);
 	
-		var clientsInRoom = io.sockets.adapter.rooms.get(room);
+		var clientsInRoom = await io.in(room).fetchSockets();
 		var numClients = clientsInRoom ? Object.keys(clientsInRoom).length : 0;
 		log('Room ' + room + ' now has ' + numClients + ' client(s)');
 	
