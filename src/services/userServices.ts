@@ -23,12 +23,16 @@ interface UserResponseObject {
   name: string;
 }
 
-export async function userLoginService(username: string): Promise<any> {
+export async function userLoginService(
+  username: string,
+  password: string
+): Promise<any> {
   try {
     const user = await prisma.user.findUnique({
       where: { username },
     });
-    if (user) {
+
+    if (user && (await bcrypt.compare(password, user.password))) {
       const token = createToken(user);
       const userDetails: UserResponseObject = {
         token: token,
@@ -48,6 +52,7 @@ export async function userRegisterService(
   user: RegisterUserObject
 ): Promise<any> {
   try {
+    user.password = await bcrypt.hash(user.password, 12);
 
     const createdUser = await prisma.user.create({
       data: {

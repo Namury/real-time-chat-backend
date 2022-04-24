@@ -1,27 +1,25 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "postgres"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model User {
-  id        Int      @unique @default(autoincrement())
-  uuid      String   @unique @default(uuid())
-  username  String   @unique
-  password  String
+  id       Int    @unique @default(autoincrement())
+  uuid     String @unique @default(uuid())
+  password String
+  username String @unique
+
   @@id([id, uuid])
 }
 
 model Room {
-  id        Int      @unique @default(autoincrement())
-  uuid      String   @unique @default(uuid())
-  name      String   @unique
+  id   Int    @unique @default(autoincrement())
+  uuid String @unique @default(uuid())
+  name String @unique
 
   @@id([id, uuid])
 }

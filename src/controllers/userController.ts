@@ -2,6 +2,7 @@ import {
   userLoginService,
   userRegisterService,
 } from "$services/userServices";
+
 import {
   response_internal_server_error,
   response_success,
@@ -10,8 +11,8 @@ import {
 import { Request, Response } from "express";
 
 export async function login(req: Request, res: Response): Promise<Response> {
-  const { name, error } = req.body;
-  const { status, userDetails } = await userLoginService(name);
+  const { username, password, error } = req.body;
+  const { status, userDetails } = await userLoginService(username, password);
   if (status) {
     return response_success(res, userDetails);
   } else {

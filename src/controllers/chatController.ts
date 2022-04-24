@@ -3,13 +3,13 @@ import {
   response_internal_server_error,
   response_success,
 } from "$utils/response.utils";
-import { chatService } from "$services/chatService";
+import { getRoomClient } from "$services/chatService";
 
 export async function getAllRootCourseByGrade(
   req: Request,
   res: Response
 ): Promise<Response> {
-  const { status, error, courses } = await chatService();
+  const { status, error, courses } = await getRoomClient();
 
   if (!status) {
     response_internal_server_error(res, error);
