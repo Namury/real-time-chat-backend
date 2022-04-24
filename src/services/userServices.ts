@@ -1,8 +1,10 @@
 import { prisma } from "$utils/prisma.utils";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 interface RegisterUserObject {
-  name:string,
+  username: string;
+  password: string;
 }
 
 function createToken(user: any) {
@@ -21,22 +23,19 @@ interface UserResponseObject {
   name: string;
 }
 
-export async function userLoginService(
-  name: string
-): Promise<any> {
+export async function userLoginService(username: string): Promise<any> {
   try {
     const user = await prisma.user.findUnique({
-      where: { name: name },
+      where: { username },
     });
     if (user) {
       const token = createToken(user);
       const userDetails: UserResponseObject = {
         token: token,
-        name: user.name
+        username: user.username,
       };
 
       return { status: true, userDetails };
-      
     } else {
       throw new Error("Incorrect");
     }
@@ -49,12 +48,14 @@ export async function userRegisterService(
   user: RegisterUserObject
 ): Promise<any> {
   try {
+
     const createdUser = await prisma.user.create({
       data: {
-        name: user.name,
+        username: user.username,
+        password: user.password,
       },
     });
-    
+
     const token = createToken(createdUser);
 
     return { status: true, user: createdUser, token };

@@ -11,9 +11,10 @@ generator client {
 }
 
 model User {
-  id      Int      @unique @default(autoincrement())
-  uuid    String   @unique @default(uuid())
-  name    String   @unique
+  id        Int      @unique @default(autoincrement())
+  uuid      String   @unique @default(uuid())
+  username  String   @unique
+  password  String
   @@id([id, uuid])
 }
 
