@@ -20,7 +20,7 @@ function createToken(user: any) {
 
 interface UserResponseObject {
   token: string;
-  name: string;
+  username: string;
 }
 
 export async function userLoginService(

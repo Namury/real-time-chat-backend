@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
     socket.in(room).emit("message", message, room);
   });
 
-  socket.on("create or join", async function (room: any) {
+  socket.on("create or join", async function (room: string) {
     log("Received request to create or join room " + room);
 
     var clientsInRoom = await io.in(room).fetchSockets();
