@@ -1,6 +1,7 @@
 import {
   userLoginService,
   userRegisterService,
+  editUserService,
 } from "$services/userServices";
 
 import {
@@ -11,21 +12,40 @@ import {
 import { Request, Response } from "express";
 
 export async function login(req: Request, res: Response): Promise<Response> {
-  const { username, password, error } = req.body;
-  const { status, userDetails } = await userLoginService(username, password);
+  const { username, password } = req.body;
+  const { status, user, error } = await userLoginService(username, password);
+
   if (status) {
-    return response_success(res, userDetails);
+    return response_success(res, user);
   } else {
     return response_unauthorized(res, error);
   }
 }
 
 export async function register(req: Request, res: Response) {
-  const { user, status, token, error, school } =
-    await userRegisterService(req.body);
+  const { username, password } = req.body;
+
+  const { status, user, error } = await userRegisterService({
+    username,
+    password,
+  });
 
   if (status) {
-    return response_success(res, { user, token, school });
+    return response_success(res, user);
+  } else {
+    return response_internal_server_error(res, error);
+  }
+}
+
+export async function editUser(req: Request, res: Response) {
+  const { username } = req.body;
+  const userUuid = req.params.userUuid
+  const oldUsername = res.locals.jwtPayload.username;
+  
+  const { status, user, error } = await editUserService(userUuid, username, oldUsername);
+
+  if (status) {
+    return response_success(res, user);
   } else {
     return response_internal_server_error(res, error);
   }

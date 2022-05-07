@@ -12,6 +12,7 @@ model User {
   uuid     String @unique @default(uuid())
   password String
   username String @unique
+  room    Room[]          
 
   @@id([id, uuid])
 }
@@ -20,6 +21,8 @@ model Room {
   id   Int    @unique @default(autoincrement())
   uuid String @unique @default(uuid())
   name String @unique
+  userId  Int
+  user User @relation(fields: userId, references: [id])
 
   @@id([id, uuid])
 }
