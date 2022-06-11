@@ -25,6 +25,8 @@ const allowedOrigins = [
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
+  credentials: true,
+  allowedHeaders: ["content-type"],
 };
 
 app.use(express.json());
@@ -37,17 +39,11 @@ SocketIOService.instance().initialize(httpServer, {
       "http://localhost:" + String(PORT),
       "http://localhost:3000",
       "http://localhost:3001",
-      "https://namury-rtc.herokuapp.com/",
-      "https://namury-rtc.herokuapp.com",
-      "https://namury-rtc.herokuapp.com/room/",
-      "https://namury-rtc.herokuapp.com/room",
-      "https://namury-rtc.herokuapp.com/chat/",
-      "https://namury-rtc.herokuapp.com/chat",
       "https://namury-rtc.vercel.app/",
       "https://namury-rtc.vercel.app",
     ],
     credentials: true,
-    allowedHeaders: ["Access-Control-Allow-Origin"],
+    allowedHeaders: ["content-type"],
   },
 });
 
