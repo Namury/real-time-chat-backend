@@ -20,7 +20,7 @@ model User {
 model Room {
   id   Int    @unique @default(autoincrement())
   uuid String @unique @default(uuid())
-  name String @unique
+  name String
   userId  Int
   user User @relation(fields: userId, references: [id])
 

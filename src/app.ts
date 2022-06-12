@@ -26,7 +26,7 @@ const allowedOrigins = [
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
   credentials: true,
-  allowedHeaders: ["content-type"],
+  allowedHeaders: ["content-type", "Authorization"],
 };
 
 app.use(express.json());
@@ -43,7 +43,7 @@ SocketIOService.instance().initialize(httpServer, {
       "https://namury-rtc.vercel.app",
     ],
     credentials: true,
-    allowedHeaders: ["content-type"],
+    allowedHeaders: ["content-type", "Authorization"],
   },
 });
 

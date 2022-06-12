@@ -69,6 +69,7 @@ export async function createRoomService(roomName: string, userId: number) {
   try {
     const findRoom = await prisma.room.findFirst({
       where: {
+        userId,
         name: roomName,
       },
     });
